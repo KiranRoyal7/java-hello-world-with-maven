@@ -7,6 +7,9 @@ pipeline{
 	       }
 	}
 	stage('Maven Build'){
+		steps{
+		mvn clean install
+		}
 	}
 }
 }
