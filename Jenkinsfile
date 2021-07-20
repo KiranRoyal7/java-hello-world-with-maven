@@ -11,6 +11,42 @@ pipeline{
 			sh 'mvn --version'
 		}
 	}
+	    stage('arti-server'){
+		    steps{
+			    rtServer (
+			    id: 'artifact-ser',
+			    url: 'https://wincywincy.jfrog.io/artifactory',
+			    
+			    credentialsId: 'Artifact-Creds',
+			    
+			    bypassProxy: true,
+			    
+			    timeout: 300
+				    )
+
+		    }
+	     stage('upload'){
+		     
+		     steps{
+			     rtUpload (
+			     spec: '''{
+			  "files": [
+			    {
+			      "pattern": "*.zip",
+			      "target": "default-maven-local/"
+			    }
+			 ]
+		    }''',
+
+		    project: 'maven-2-default'
+				     )
+		     
+		     
+		     
+		     }
+		      
+		    }
+	    }
 }
 }
 
